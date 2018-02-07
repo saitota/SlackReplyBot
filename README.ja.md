@@ -32,7 +32,7 @@
 
 3. リポジトリをClone
 ```
-$ git clone https://github.com/saitota9/SlackServerlessReplyBot
+$ git clone https://github.com/saitota/SlackServerlessReplyBot.git
 ```
 
 4. Serverless の設定ファイルを編集、先程のトークンで書き換えてください
