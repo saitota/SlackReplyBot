@@ -2,6 +2,7 @@
 Receive the message on Slack public channel, and reply when a specific keyword is included.
 
 ***DEMO:***
+![demo](https://user-images.githubusercontent.com/1152469/35902255-db0707e4-0c1d-11e8-882e-ca90d1e7a933.gif)
 
 
 ## Description

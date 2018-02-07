@@ -2,6 +2,7 @@
 スラックのPublic Channel のメッセージを受信し、特定のキーワードがあると返信するサーバレスBOTです。
 
 ***DEMO:***
+![demo](https://user-images.githubusercontent.com/1152469/35902255-db0707e4-0c1d-11e8-882e-ca90d1e7a933.gif)
 
 
 ## 詳細
