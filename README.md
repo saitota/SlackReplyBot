@@ -32,7 +32,7 @@ Receive the message on Slack public channel, and reply when a specific keyword i
 
 3. Clone this repo.
 ```
-$ git clone https://github.com/saitota9/SlackServerlessReplyBot
+$ git clone https://github.com/saitota/SlackServerlessReplyBot.git
 ```
 
 4. Modify sererless.yml 's two TOKEN to your token.
