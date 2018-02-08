@@ -5,11 +5,10 @@ It is a serverless BOT which receives Slack's Public Channel message and reply i
 
 ![demo](https://user-images.githubusercontent.com/1152469/35902255-db0707e4-0c1d-11e8-882e-ca90d1e7a933.gif)
 
-
 ## Description
-- Using Lambda to Post message
-- Using API Gateway to subscribe message
-- Using Slack BOT & Subscribe
+Using Slack's BOT and Subscribe to receive all the public messages toward Lambda via API-Gateway.
+If there includes a specific keyword, call the Slack API and send a message back to the same channel.
+Slack BOT needs to be create manually, but AWS side automates environment construction by using Serverless Framework.
 
 ## Requirement
 - AWS Account
@@ -71,4 +70,4 @@ I wrote article about this BOT.
 [saitotak](https://qiita.com/saitotak)
 
 # ✍ License
-[MIT](http://b4b4r07.mit-license.org)
+[MIT](./LICENSE)

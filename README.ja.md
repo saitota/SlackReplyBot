@@ -5,11 +5,10 @@ Slack のパブリックチャンネルのメッセージから、特定のキ�
 
 ![demo](https://user-images.githubusercontent.com/1152469/35902255-db0707e4-0c1d-11e8-882e-ca90d1e7a933.gif)
 
-
 ## Description
-- Lambda をメッセージ送信に使っています
-- Subscribe に API Gateway を使っています
-- Slack BOT を使っています
+Slack の BOT と Subscribe を使うことで、全ての Public Message を API-Gateway 経由で Lambda に受信します。
+特定のキーワードがある場合は Slack API を呼び出して、同一チャンネルに固定メッセージを返信します。
+Slack BOT は手動で設定する必要がありますが、AWS 側は Serverless Framework を使うことで環境構築を自動化しています。
 
 ## Requirement
 - AWS アカウント
@@ -71,4 +70,5 @@ functions:
 [saitotak](https://qiita.com/saitotak)
 
 # ✍ License
-[MIT](http://b4b4r07.mit-license.org)
+[MIT](./LICENSE)
+
