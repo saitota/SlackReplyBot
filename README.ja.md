@@ -1,4 +1,4 @@
-﻿# 🤖 Slack Serverless Reply Bot
+﻿# 🤖 Slack Reply Bot
 Slack のパブリックチャンネルのメッセージから、特定のキーワードが含まれるときに定型文を自動返信するサーバレス BOT です。
 
 ***DEMO:***
@@ -33,25 +33,25 @@ Slack BOT は手動で設定する必要がありますが、AWS 側は Serverle
 
 3. リポジトリをClone
 ```
-$ git clone https://github.com/saitota/SlackServerlessReplyBot.git
+$ git clone https://github.com/saitota/SlackReplyBot.git
 ```
 
 4. Serverless の設定ファイルを編集、先程のトークンで書き換えてください
-``` sererless.yml
+``` enviroment_dev.yml
 OAUTH_TOKEN: 'xoxp-000000000000-000000000000-000000000000-0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x'
 BOT_TOKEN: 'xoxb-000000000000-0x0x0x0x0x0x0x'
 ```
 
 5. Serverless Framework でデプロイ (事前にaws-cliの初期設定が必要です)
 ```
-$ sls deploy ./SlackServerlessReplyBot
+$ sls deploy ./SlackReplyBot
 ...
 api keys:
   None
 endpoints:
-  POST - https://0x0x0x0x0x.execute-api.ap-northeast-1.amazonaws.com/prod/
+  POST - https://0x0x0x0x0x.execute-api.ap-northeast-1.amazonaws.com/dev/
 functions:
-  fnc: SlackServerlessReplyBot-prod-fnc
+  fnc: SlackReplyBot-dev-fnc
 ```
 6. Slack BOT のエンドポイント設定と、Subscribe設定をします
     - Event Subscriptions

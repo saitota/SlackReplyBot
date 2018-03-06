@@ -1,5 +1,5 @@
-﻿# 🤖 Slack Serverless Reply Bot
-It is a serverless BOT which receives Slack's Public Channel message and reply if there includes a specific keyword.
+﻿# 🤖 Slack Reply Bot
+It is a serverless BOT which receives Slack's public channel message and reply if there includes a specific keyword.
 
 ***DEMO:***
 
@@ -33,25 +33,25 @@ Slack BOT needs to be create manually, but AWS side automates environment constr
 
 3. Clone this repo.
 ```
-$ git clone https://github.com/saitota/SlackServerlessReplyBot.git
+$ git clone https://github.com/saitota/SlackReplyBot.git
 ```
 
-4. Modify sererless.yml 's two TOKENs to your token.
-``` sererless.yml
+4. Modify enviroment_dev.yml 's two TOKENs to your token.
+``` enviroment_dev.yml
 OAUTH_TOKEN: 'xoxp-000000000000-000000000000-000000000000-0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x'
 BOT_TOKEN: 'xoxb-000000000000-0x0x0x0x0x0x0x'
 ```
 
 5. Deploy with Serverless Framework (you must aws-cli initialize before)
 ```
-$ sls deploy ./SlackServerlessReplyBot
+$ sls deploy
 ...
 api keys:
   None
 endpoints:
-  POST - https://0x0x0x0x0x.execute-api.ap-northeast-1.amazonaws.com/prod/
+  POST - https://0x0x0x0x0x.execute-api.ap-northeast-1.amazonaws.com/dev/
 functions:
-  fnc: SlackServerlessReplyBot-prod-fnc
+  fnc: SlackReplyBot-dev-fnc
 ```
 6. Set Slack BOT endpoint and event subscribe settings 
     - Event Subscriptions
