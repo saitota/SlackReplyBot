@@ -1,15 +1,15 @@
-service: SlackServerlessReplyBot
+service: SlackReplyBot
 provider:
   name: aws
   runtime: python3.6
-  stage: prod
+  stage:  ${opt:stage, self:custom.defaultStage}
   region: ap-northeast-1
-  environment:
-    OAUTH_TOKEN: 'xoxp-000000000000-000000000000-000000000000-0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x'
-    BOT_TOKEN: 'xoxb-000000000000-0x0x0x0x0x0x0x0x0x0x0x0x'
-    HOOK_KEYWORD: 'poop'
-    REPLY_WORD: ':poop: :poop: :poop:'
-    BOT_NAME: 'poopman'
+custom:
+  defaultStage: dev
+  otherfile:
+    environment:
+      dev: ${file(./enviroment_dev.yml)}
+      prd: ${file(./enviroment_prd.yml)}
 functions:
   fnc:
     handler: main.handler
@@ -17,3 +17,5 @@ functions:
       - http:
           path: /
           method: POST
+    environment:
+      ${self:custom.otherfile.environment.${self:provider.stage}}

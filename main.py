@@ -7,54 +7,67 @@ print('Loading function... ')
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-def handler(event, context):
-    #getenv
-    OAUTH_TOKEN = os.environ['OAUTH_TOKEN']
-    BOT_TOKEN = os.environ['BOT_TOKEN']
-    HOOK_KEYWORD = os.environ['HOOK_KEYWORD']
-    REPLY_WORD = os.environ['REPLY_WORD']
-    BOT_NAME = os.environ['BOT_NAME']
-
-    #受信したjsonをLogsに出力
-    logging.info(json.dumps(event))
-
-    print (type(event))
-    # json処理
+def event_to_json(event):
     if 'body' in event:
         body = json.loads(event.get('body'))
+        return body
     elif 'token' in event:
         body = event
+        return body
     else:
         logger.error('unexpected event format')
-        return {'statusCode': 500, 'body': 'error:unexpected event format'}
+        exit
 
-    #url_verificationイベントに返す
-    if 'challenge' in body:
-        challenge = body.get('challenge')
-        logging.info('return challenge key %s:', challenge)
-        return {
+class ChallangeJson(object):
+     def __init__(self, key):
+          self.key = key
+     def json(self):
+          return {
             'isBase64Encoded': 'true',
             'statusCode': 200,
             'headers': {},
-            'body': challenge
+            'body': self.key
         }
-    #SlackMessageに特定のキーワードが入っていたときの処理（poopに反応して処理します）
-    if body.get('event').get('text') == HOOK_KEYWORD:
-        logger.info('hit!: %s', HOOK_KEYWORD)
-        url = 'https://slack.com/api/chat.postMessage'
-        headers = {
+
+class PostJson(object):
+    def __init__(self):
+        self.BOT_TOKEN = os.environ['BOT_TOKEN']
+        self.OAUTH_TOKEN = os.environ['OAUTH_TOKEN']
+        self.REPLY_WORD = os.environ['REPLY_WORD']
+        self.BOT_NAME = os.environ['BOT_NAME']
+        self.BOT_ICON = os.environ['BOT_ICON']
+    def headers(self):
+        return {
             'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer {0}'.format(BOT_TOKEN)
-        }
-        data = {
-            'token': OAUTH_TOKEN,
-            'channel': body.get('event').get('channel'),
-            'text': REPLY_WORD,
-            'username': BOT_NAME
-        }
-        # POST処理　
-        req = urllib.request.Request(url, data=json.dumps(data).encode('utf-8'), method='POST', headers=headers)
+            'Authorization': 'Bearer {0}'.format(self.BOT_TOKEN)
+      }
+    def data(self,channel):
+        return {
+           'token': self.OAUTH_TOKEN,
+           'channel': channel,
+           'text': self.REPLY_WORD,
+            'username': self.BOT_NAME,
+           'icon_emoji': self.BOT_ICON
+         }
+
+def handler(event, context):
+    HOOK_KEYWORD = os.environ['HOOK_KEYWORD']
+    # Output the received event to the log
+    # logging.info(json.dumps(event))
+    body = event_to_json(event)
+    # return if it was challange-event
+    if 'challenge' in body:
+        challenge_key = body.get('challenge')
+        logging.info('return challenge key %s:', challenge_key)
+        return ChallangeJson(challenge_key).json()
+    # Hook specific word
+    if HOOK_KEYWORD in body.get('event').get('text',''):
+        logger.info('hit: %s', HOOK_KEYWORD)
+        post_head = PostJson().headers()
+        post_body = PostJson().data(body.get('event').get('channel'))
+        # POST
+        url = 'https://slack.com/api/chat.postMessage'
+        req = urllib.request.Request(url, data=json.dumps(post_body).encode('utf-8'), method='POST', headers=post_head)
         res = urllib.request.urlopen(req)
         logger.info('post result: %s', res.msg)
         return {'statusCode': 200, 'body': 'ok'}
-    return {'statusCode': 200, 'body': 'quit'}
