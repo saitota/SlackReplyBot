@@ -3,9 +3,12 @@ provider:
   name: aws
   runtime: python3.6
   stage:  ${opt:stage, self:custom.defaultStage}
-  region: ap-northeast-1
+  region: ${opt:region, self:custom.defaultRegion}
+  profile: ${opt:profile, self:custom.defaultProfile}
 custom:
   defaultStage: dev
+  defaultRegion: ap-northeast-1
+  defaultProfile: default
   otherfile:
     environment:
       dev: ${file(./enviroment_dev.yml)}
