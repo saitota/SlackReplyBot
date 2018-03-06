@@ -19,14 +19,12 @@ def event_to_json(event):
         exit
 
 class ChallangeJson(object):
-     def __init__(self, key):
-          self.key = key
-     def json(self):
+     def data(self,key):
           return {
             'isBase64Encoded': 'true',
             'statusCode': 200,
             'headers': {},
-            'body': self.key
+            'body': key
         }
 
 class PostJson(object):
@@ -59,9 +57,9 @@ def handler(event, context):
     if 'challenge' in body:
         challenge_key = body.get('challenge')
         logging.info('return challenge key %s:', challenge_key)
-        return ChallangeJson(challenge_key).json()
+        return ChallangeJson().data(challenge_key)
     # Hook specific word
-    if HOOK_KEYWORD in body.get('event').get('text',''):
+    if HOOK_KEYWORD in body.get('event').get('text','') and body.get('event').get('subtype','') == '':
         logger.info('hit: %s', HOOK_KEYWORD)
         post_head = PostJson().headers()
         post_body = PostJson().data(body.get('event').get('channel'))
