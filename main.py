@@ -56,27 +56,31 @@ class PostJson(object):
 
 def handler(event, context):
     HOOK_KEYWORD = os.environ['HOOK_KEYWORD']
+
     # Output the received event to the log
     # logging.info(json.dumps(event))
     body = event_to_json(event)
+
     # return if it was challange-event
     if 'challenge' in body:
         challenge_key = body.get('challenge')
         logging.info('return challenge key %s:', challenge_key)
         return ChallangeJson().data(challenge_key)
+
     # Hook specific word
     if HOOK_KEYWORD in body.get('event').get(
             'text', '') and body.get('event').get('subtype', '') == '':
         logger.info('hit: %s', HOOK_KEYWORD)
         post_head = PostJson().headers()
-        post_body = PostJson().data(body.get('event').get('channel'))
+        post_data = PostJson().data(body.get('event').get('channel'))
         # POST
         url = 'https://slack.com/api/chat.postMessage'
         req = urllib.request.Request(
             url,
-            data=json.dumps(post_body).encode('utf-8'),
+            data=json.dumps(post_data).encode('utf-8'),
             method='POST',
             headers=post_head)
         res = urllib.request.urlopen(req)
         logger.info('post result: %s', res.msg)
-        return {'statusCode': 200, 'body': 'ok'}
+
+    return {'statusCode': 200, 'body': 'ok'}
