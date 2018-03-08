@@ -13,6 +13,13 @@ custom:
     environment:
       dev: ${file(./enviroment_dev.yml)}
       prd: ${file(./enviroment_prd.yml)}
+  alerts: # alert plugin
+    stages:
+      - dev
+      - prd
+    alarms:
+      - functionErrors
+      - functionThrottles
 functions:
   fnc:
     handler: main.handler
@@ -22,3 +29,11 @@ functions:
           method: POST
     environment:
       ${self:custom.otherfile.environment.${self:provider.stage}}
+plugins:
+  - serverless-plugin-aws-alerts
+
+# SlackServerlessReactionBot
+# Scope and Event : reaction_added/reactions:read
+# SlackServerlessReplyBot
+# Scope and Event : message.channels/channels:history
+# role to invole another lambda
