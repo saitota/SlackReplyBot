@@ -13,6 +13,7 @@ Slack BOT は手動で設定する必要がありますが、AWS 側は Serverle
 ## Requirement
 - AWS アカウント
 - Serverless Framework
+- [serverless-plugin-aws-alerts](https://serverless.com/blog/serverless-ops-metrics/) (optional)
 - Slack アカウント
 
 ## Installation

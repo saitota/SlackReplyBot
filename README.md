@@ -13,6 +13,7 @@ Slack BOT needs to be create manually, but AWS side automates environment constr
 ## Requirement
 - AWS Account
 - Serverless Framework
+- [serverless-plugin-aws-alerts](https://serverless.com/blog/serverless-ops-metrics/) (optional)
 - Slack Account
 
 ## Installation
